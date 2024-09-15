@@ -22,7 +22,21 @@ class Employe extends Authenticatable
         'name',
         'email',
         'password',
+        'telephone',
+        'adresse',
+        'birthday',
+        'sexe',
+        'photo',
+        'date_fonction',
+        'date_fin_contrat',
+        'contrat',
+        'actif',
+        'creer_par',
+        'date_create',
+        'date_depart',
+        'salaire',
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.

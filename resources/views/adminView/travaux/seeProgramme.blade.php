@@ -15,14 +15,26 @@
                         <li>{{  $item2}}</li>
                     @endforeach
                 </ul>
+
+                <div class="mt-4">
+                    @if($item->effectuer ==1)
+                    <div class="alert alert-info" role="alert">
+                        @if($item->remarques)
+                        {{$item->remarques}}
+                        @else
+                        Le client n'a laissé aucun commentaire
+                        @endif
+                    </div>
+                    @endif
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                @if($contrat->boucler == 0)
-                <button type="button" class="btn btn-primary">Modifier programmes</button>
-                <a onclick="return confirm('Voulez-vous vraiment supprimer ce programmer ?')" href="{{route('admin.travaux.del_programme',$item->id)}}"  class="btn btn-danger">
-                    Supprimer Programme
-                </a>
+                @if($item->effectuer == 0)
+                    <button type="button" class="btn btn-primary">Modifier programmes</button>
+                    <a onclick="return confirm('Voulez-vous vraiment supprimer ce programmer ?')" href="{{route('admin.travaux.del_programme',$item->id)}}"  class="btn btn-danger">
+                        Supprimer Programme
+                    </a>
                 @endif
 
             </div>

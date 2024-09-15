@@ -14,9 +14,7 @@ class CreateEmployesTable extends Migration
     public function up()
     {
         Schema::create('employes', function (Blueprint $table) {
-            /*
-        name":null,"email":null,"telephone":null,"adresse":null,"birthday":null,"sexe":"Masculin","photo":null,"date_fonction":null,"date_fin_contrat":null,"contrat":
-        */
+
             $table->id();
             $table->string('name');
             $table->string('email');
@@ -37,6 +35,7 @@ class CreateEmployesTable extends Migration
             $table->bigInteger('salaire')->default(0);
 
             $table->timestamps();
+            $table->dateTime('deleted_at')->nullable();
         });
     }
 

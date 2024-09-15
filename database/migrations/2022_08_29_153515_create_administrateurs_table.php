@@ -29,6 +29,7 @@ class CreateAdministrateursTable extends Migration
 
             $table->rememberToken();
             $table->timestamps();
+            $table->dateTime('deleted_at')->nullable();
         });
     }
 

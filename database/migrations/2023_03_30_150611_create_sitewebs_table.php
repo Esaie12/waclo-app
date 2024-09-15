@@ -14,9 +14,7 @@ class CreateSitewebsTable extends Migration
     public function up()
     {
         Schema::create('sitewebs', function (Blueprint $table) {
-            /*
-            "adresse":null,"telephone":null,"email_one":null,"email_deux":null,"facebook":null,"twitter":null,"whatsapp":null,"tiktok":null,"google_maps":
-            */
+
             $table->id();
             $table->string('adresse')->nullable();
             $table->string('telephone')->nullable();

@@ -24,8 +24,9 @@ class TravauxController extends Controller
         return view('adminView.travaux.new');
     }
 
+    //Enregistrer un contrat
     function save_new_travaux(Request $req){
-        //"client":"2","date_debut":null,"date_fin":null,"frequence":"1","modalite":"Jours
+
         $req->validate([
             'client'=>['required', 'numeric', 'min:1'],
             'date_debut'=>['required', 'date'],
@@ -35,20 +36,29 @@ class TravauxController extends Controller
             'fichier_contrat'=>['nullable', 'file', 'mimes:pdf,doc,docx'],
         ]);
 
-        $ct = new Contrat();
-        $ct->id_client = $req['client'];
-        $ct->date_debut = $req['date_debut'];
-        $ct->date_fin = $req['date_fin'];
-        $ct->frequence = $req['frequence'];
-        $ct->modalite = $req['modalite'];
-
         if(!empty($req['fichier_contrat'])){
             $chemin = $req->file('fichier_contrat')->store('upload/client', 'public');
-            $ct->fichier_contrat = $chemin;
         }
-        $ct->date_create = date('Y-m-d');
-        $ct->creer_by = Auth::user()->id;
-        $ct->save();
+
+        $contrat = Contrat::create([
+            'id_client'=> $req['client'],
+            'date_debut'=>$req['date_debut'],
+            'date_fin'=> $req['date_fin'],
+            'frequence'=> $req['frequence'],
+            'modalite'=>$req['modalite'],
+            'fichier_contrat'=>$chemin ?? null,
+            'date_create'=> date('Y-m-d'),
+            'creer_by'=> Auth::user()->id,
+        ]);
+
+        $info =[
+            'actor_id'=> $contrat->id_client,
+            'for'=> "user",
+            'title' => "Felicitation, notre contrat est pret",
+            'content' => "Nous vous informons que le contrat  est pret et débute le ".$contrat->date_debut.". Vous serrez informer des passages de notre équipe.",
+            'link'=> route('mescontrats') ,
+        ];
+        app('App\Http\Controllers\NotificationController')->create_notification($info);
 
         return redirect()->route('admin.travaux.encours');
     }
@@ -183,6 +193,17 @@ class TravauxController extends Controller
             $m->id_contrat = $req['idContrat'];
             $m->id_programme = $pm->id;
             $m->save();
+
+
+            $info =[
+                'actor_id'=> $value,
+                'for'=> "agent",
+                'title' => "Important : Emploi du temps",
+                'content' => "Vous avez un programme pour le ".$req['heure_fin']." de ".$req['heure_debut']." à ".$req['heure_fin'].". Veuillez consulter votre emploi de temps",
+                'link'=> route('agent.agenda') ,
+            ];
+            app('App\Http\Controllers\NotificationController')->create_notification($info);
+
         }
 
 

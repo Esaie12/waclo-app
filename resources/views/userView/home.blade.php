@@ -25,9 +25,9 @@
         @if(count($programmes) == 0)
         <div class="col-12">
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="bi bi-exclamation-octagon me-1"></i>
-                Vous n'avez aucun contrat en cours avec Waclo.
-            </div>
+                Bonjour <b>{{Auth::user()->name}} {{Auth::user()->firstname}}</b> , Vous n'avez aucun programme dans ce contrat. <br>
+                Vous serrez avetir dès que nous en établisserons pour vous.
+           </div>
         </div>
 
         @else
@@ -64,11 +64,11 @@
                                     @endif
 
                                     @if($item->effectuer == 0)
-                                    <div class="badge rounded-pill bg-info" role="alert" style="margin-right:5px" >
+                                    <div class=" ms-3 badge rounded-pill bg-info" role="alert" style="margin-right:5px" >
                                         <strong>En attente</strong>
                                     </div>
                                     @else
-                                    <div class="badge rounded-pill bg-success" role="alert" style="margin-right:5px" >
+                                    <div class=" ms-3 badge rounded-pill bg-success" role="alert" style="margin-right:5px" >
                                         <strong>Deja visité</strong>
                                     </div>
                                     @endif
@@ -92,7 +92,7 @@
                                         <div class="col-6 text-primary">Heure de départ</div>
                                         <div class="col-6">{{ $item->heure_fin }}</div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row mt-4">
                                         <div class="col-6 text-primary"></div>
                                         <div class="col-6"></div>
                                     </div>

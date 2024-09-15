@@ -21,7 +21,8 @@
         @if(count($programmes) == 0)
         <div class="col-md-12">
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                Bonjour {{Auth::user()->name}}, Vous n'avez aucun contrat avec Waclo.
+                Bonjour <b>{{Auth::user()->name}} {{Auth::user()->firstname}}</b> , Vous n'avez aucun programme dans ce contrat. <br>
+                Vous serrez avetir dès que nous en établisserons pour vous.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         </div>
@@ -64,20 +65,27 @@
                                 </td>
                                 <td>
                                     <div class="btn btn-group">
-                                        @if($item->date_passage != date('Y-m-d') and $item->effectuer == 0)
-                                        <a class="btn btn-success" href="{{route('programmes.confirm',$item->id)}}">Confirmer passage des agents</a>
+                                        @if( $item->effectuer == 0)
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="{{'#confirmPassage'.$item->id}}">
+                                            Confirmer passage des agents
+                                        </button>
+                                        @else
+                                        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="{{'#confirmPassage'.$item->id}}">
+                                            Voir le commentaire
+                                        </button>
                                         @endif
+
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="{{'#basicModal'.$item->id}}">
                                             Voir agents
                                         </button>
 
                                     </div>
-                                    @include('userView.seeProgramme')
+
 
                                 </td>
                             </tr>
 
-
+                            @include('userView.seeProgramme')
 
                             @endforeach
 

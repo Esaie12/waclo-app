@@ -14,9 +14,6 @@ class CreateTravailsTable extends Migration
     public function up()
     {
         Schema::create('travails', function (Blueprint $table) {
-
-            ////"your_name":null,"sexe":"Masculin","email":null,"telephone":null,"age":"18","adresse":null,"others"#
-
             $table->id();
             $table->string('your_name')->nullable();
             $table->string('sexe')->nullable();

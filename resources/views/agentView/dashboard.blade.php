@@ -83,7 +83,7 @@
                                         <div class="col-6">{{ $item->heure_fin }}</div>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="row mt-4">
                                         <div class="col-12 text-primary">L'équipe sera composée de </div>
                                         <div class="col-12" >
                                             <ol class="mt-2" >

@@ -24,7 +24,7 @@ class CreateProgrammesTable extends Migration
             $table->text('employes');
             $table->text('employes_id');
 
-            $table->string('remarques')->nullable();
+            $table->text('remarques')->nullable();
             $table->boolean('effectuer')->default(0);
             $table->bigInteger('creer_by');
 

@@ -48,9 +48,11 @@ class UserController extends Controller
         return view('userView.mesProgrammes',['programmes'=>$programme, 'result'=>0]);
     }
 
-    function confirm_programmes($id){
+    function confirm_programmes(Request $request , $id){
+
         $r = Programme::find($id);
         $r->effectuer = 1;
+        $r->remarques = $request['remarques'];
         $r->save();
 
         return redirect()->back();

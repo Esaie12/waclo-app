@@ -14,9 +14,7 @@ class CreateContratsTable extends Migration
     public function up()
     {
         Schema::create('contrats', function (Blueprint $table) {
-            // //"client":"2","date_debut":null,"date_fin":null,"frequence":"1","modalite":"Jours
-
-            $table->id();
+           $table->id();
             $table->bigInteger('id_client');
             $table->date('date_debut');
             $table->date('date_fin')->nullable();

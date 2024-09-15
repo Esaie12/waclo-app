@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Devi;
 use App\Models\Travail;
+use App\Models\Contact;
 
 class DevisController extends Controller
 {
+
+    //Envoyer un message depuis la page contac
     function send_message(Request $req){
 
-        /*
-        ,"first_name":"uj","email":"y@mil.com","phone":"95962410","message":"BBniiuu","submit"
-        */
         $req->validate([
             'first_name'=>['required', 'string'],
             'email'=> ['required', 'email'],
@@ -34,25 +34,31 @@ class DevisController extends Controller
             'message'=>$req['message'],
         ];
 
-        $ad = DB::table('administrateurs')->where('receve_mail', 1)
-        ->get(['email']);
+        $contact = Contact::create($details);
 
-        foreach ($ad as $value) {
+        $admins = DB::table('administrateurs')->where('receve_mail', 1)->get(['id','email']);
 
-            \Mail :: to (  $value->email )
-             ->send ( new \App\Mail\SendMsg( $details ));
+        foreach ($admins as $value) {
+            \Mail::to( $value->email )->send( new \App\Mail\SendMsg( $details ));
+
+            $info =[
+                'actor_id'=> $value->id,
+                'for'=> "admin",
+                'title' => "Nouveau message",
+                'content' => "Le client ".$req['first_name']." vient d'envoyer un message",
+                'link'=> route('admin.devis.details',$contact->id) ,
+            ];
+            app('App\Http\Controllers\NotificationController')->create_notification($info);
         }
 
-
-
-        return redirect()->back()->with('msg', "ok");
+        return redirect()->back()->with('msg', "Message envoyé avec succès");
 
     }
 
+
+    //Envoyer un devis à la société
     function send_devis(Request $req){
-        /*
-        espace":null,"frequence":"Quotidiennement","surface":"Moins de 50 m\u00b2","demarrage":"D'ici une semaine","activite_society":null,"your_name":null,"email":null,"telephone":null,"name_society":null,"others"
-        */
+
 
         $req->validate([
             'espace'=>['required', 'string','min:1'],
@@ -70,52 +76,45 @@ class DevisController extends Controller
             'services.*'=>[ 'string','min:1'],
         ]);
 
-        $dev = new Devi();
-        $dev->espace = $req['espace'];
-        $dev->frequence = $req['frequence'];
-        $dev->surface = $req['surface'];
-        $dev->demarrage = $req['demarrage'];
-        $dev->collabo_society = $req['collabo_society'];
-        $dev->your_name = $req['your_name'];
-        $dev->email = $req['email'];
-        $dev->telephone = $req['telephone'];
-        $dev->name_society = $req['name_society'];
-        $dev->others = $req['others'];
-        $dev->services = json_encode($req['services']);
-        $dev->date_emission = date('Y-m-d');
-        $dev->save();
-
-        $details = [
-            "espace" => $req['espace'],
-            'frequence'=> $req['frequence'],
-            'surface'=> $req['surface'],
-            'demarrage'=> $req['demarrage'],
-            //'activite_society'=> $req['activite_society'],
-            'collabo_society'=> $req['collabo_society'],
-            'your_name'=> $req['your_name'],
-            'email'=> $req['email'],
-            'telephone'=> $req['telephone'],
-            'name_society'=> $req['name_society'],
-            'others'=> $req['others'],
-            'services'=> json_encode($req['services']),
+        $data = [
+            'espace' => $req->espace,
+            'frequence' => $req->frequence,
+            'surface' => $req->surface,
+            'demarrage' => $req->demarrage,
+            'collabo_society' => $req->collabo_society,
+            'your_name' => $req->your_name,
+            'email' => $req->email,
+            'telephone' => $req->telephone,
+            'name_society' => $req->name_society,
+            'others' => $req->others,
+            'services' => json_encode($req['services']),
+            'date_emission' => date('Y-m-d'),
         ];
 
-        $ad = DB::table('administrateurs')->where('receve_mail', 1)
-        ->get(['email']);
+        //Créer le devis
+        $dev = Devi::create($data);
 
-        foreach ($ad as $value) {
-            \Mail :: to (  $value->email )
-            ->send ( new \App\Mail\SendDevis( $details ));
+        //Envoyer le mail aux admins
+        $admins = DB::table('administrateurs')->where('receve_mail', 1)->get(['id','email']);
+
+        foreach ($admins as $value) {
+            \Mail ::to( $value->email)->send ( new \App\Mail\SendDevis( $data ));
+
+            $info =[
+                'actor_id'=> $value->id,
+                'for'=> "admin",
+                'title' => "Nouvelle demander de devis",
+                'content' => "Le client ".$data['your_name']." vient d'envoyer une demande de devis",
+                'link'=> route('admin.devis.details',$dev->id) ,
+            ];
+            app('App\Http\Controllers\NotificationController')->create_notification($info);
         }
 
-
-
-        return redirect()->back()->with('msg', "ok");
-
+        return redirect()->back()->with('msg', "Dévis envoyé avec succès");
     }
 
+    //Demande de job
     function send_job_demande(Request $req){
-        //"your_name":null,"sexe":"Masculin","email":null,"telephone":null,"age":"18","adresse":null,"others"#
         $req->validate([
             'your_name'=>['required', 'string', 'max:25'],
             'sexe'=>['required', 'string'],
@@ -126,37 +125,38 @@ class DevisController extends Controller
             'others'=>['required', 'string', 'max:255'],
         ]);
 
-        $tr = new Travail();
-        $tr->sexe = $req['sexe'];
-        $tr->age = $req['age'];
-        $tr->adresse = $req['adresse'];
-        $tr->your_name = $req['your_name'];
-        $tr->email = $req['email'];
-        $tr->telephone = $req['telephone'];
-        $tr->others = $req['others'];
-        $tr->date_demande =date('Y-m-d');
-        $tr->save();
-
         $details = [
             'sexe'=> $req['sexe'],
-            'age'=>$req['age'],
-            'adresse'=>$req['adresse'],
+            'age'=> $req['age'],
+            'adresse'=> $req['adresse'],
             'your_name'=> $req['your_name'],
             'email'=> $req['email'],
             'telephone'=> $req['telephone'],
             'others'=> $req['others'],
+            'date_demande'=>date('Y-m-d'),
         ];
 
-        $ad = DB::table('administrateurs')->where('receve_mail', 1)
-        ->get(['email']);
+        $taf = Travail::create($details);
 
-        foreach ($ad as $value) {
-            \Mail :: to ( $value->email )
-            ->send ( new \App\Mail\SendJob( $details ));
+        $admins = DB::table('administrateurs')->where('receve_mail', 1)
+        ->get(['email','id']);
+
+
+        foreach ($admins as $value) {
+            \Mail:: to( $value->email)->send( new \App\Mail\SendJob( $details ));
+
+            $info =[
+                'actor_id'=> $value->id,
+                'for'=> "admin",
+                'title' => "Demande d'emploi",
+                'content' => $req['your_name']." souhaite rejoindre votre équipe",
+                'link'=> route('admin.jobs.details',$taf->id) ,
+            ];
+            app('App\Http\Controllers\NotificationController')->create_notification($info);
+
         }
 
-
-        return redirect()->back()->with('msg', "ok");
+        return redirect()->back()->with('msg', "Demande envoyée avec succès");
 
     }
 }

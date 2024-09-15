@@ -96,7 +96,8 @@
                                 <th scope="col">Date Passage</th>
                                 <th scope="col">Arrivée</th>
                                 <th scope="col">Départ</th>
-                                <th scope="col">Actions</th>
+                                <th scope="col">Statut</th>
+                                <th scope="col" class="text-center" >Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -108,15 +109,28 @@
                                 <td>{{$item->heure_debut}}</td>
                                 <td>{{$item->heure_fin}}</td>
                                 <td>
-                                    @if($item->effectuer == 0)
+                                    @if($item->effectuer == 1)
+                                    <span class="badge bg-success">Nettoyage effectué</span>
+                                    @else
+                                    <span class="badge bg-warning">En attente</span>
+                                    @endif
+                                </td>
+                                <td>
+
                                     <div class="btn-group">
-                                        <a onclick="return confirm('Voulez vous vraiment le faire ?') " href="{{route("admin.travaux.confirm_programmes",$item->id)}}" class="btn btn-success">Confirmer le nettoyage</a>
+                                        <!--a onclick="return confirm('Voulez vous vraiment le faire ?') " href="{{route("admin.travaux.confirm_programmes",$item->id)}}" class="btn btn-success">Confirmer le nettoyage</a-->
+
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="{{'#basicModal'.$item->id}}">
                                             Voir agents
                                         </button>
                                     </div>
 
                                     @include('adminView.travaux.seeProgramme')
+
+                                    @if($item->effectuer == 1)
+                                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="{{'#basicModal'.$item->id}}">
+                                        Commentaire
+                                    </button>
                                     @else
                                     <a onclick="return confirm('Voulez vous vraiment le faire ?') " href="{{route("admin.travaux.annuler_programmes",$item->id)}}" class="btn btn-danger">Annuler Passage</a>
                                     @endif

@@ -145,6 +145,49 @@
 
 </li-->
 
+<li class="nav-item dropdown">
+
+    @php
+        $notifs = app('App\Http\Controllers\NotificationController')->mines_notification('user');
+    @endphp
+
+    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+        <i class="bi bi-bell"></i>
+        <span class="badge bg-danger badge-number">{{count($notifs)}} </span>
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+
+        <li class="dropdown-header">
+            Vous avez {{count($notifs)}} notifications
+            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">
+                Voir tout</span></a>
+        </li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+
+        @foreach ($notifs as $notif)
+        <li class="message-item">
+            <a href="{{ $notif['link'] ?? '#' }}">
+                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                <div>
+                    <h4>{{$notif->title}}</h4>
+                    <p>{{$notif->content}}</p>
+                    <p>{{$notif->created_at}}</p>
+                </div>
+            </a>
+        </li>
+        @endforeach
+
+        <li class="dropdown-footer">
+            <a href="#">Voir toutes les notifications</a>
+        </li>
+
+    </ul>
+
+</li>
+
 <li class="nav-item dropdown pe-3">
 
     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">

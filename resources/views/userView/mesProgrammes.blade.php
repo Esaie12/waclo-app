@@ -107,20 +107,27 @@
                                 </td>
                                 <td>
                                     <div class="btn btn-group">
-                                        @if($item->date_passage != date('Y-m-d') and $item->effectuer == 0)
-                                        <a class="btn btn-success" href="{{route('programmes.confirm',$item->id)}}">Confirmer passage des agents</a>
+                                        @if( $item->effectuer == 0)
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="{{'#confirmPassage'.$item->id}}">
+                                            Confirmer passage des agents
+                                        </button>
+                                        @else
+                                        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="{{'#confirmPassage'.$item->id}}">
+                                            Voir le commentaire
+                                        </button>
                                         @endif
+
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="{{'#basicModal'.$item->id}}">
                                             Voir agents
                                         </button>
 
                                     </div>
-                                    @include('userView.seeProgramme')
+
 
                                 </td>
                             </tr>
 
-
+                            @include('userView.seeProgramme')
 
                             @endforeach
 

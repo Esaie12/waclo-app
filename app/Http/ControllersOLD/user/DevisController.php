@@ -50,9 +50,21 @@ class DevisController extends Controller
     }
 
     function send_devis(Request $req){
-        /*
-        espace":null,"frequence":"Quotidiennement","surface":"Moins de 50 m\u00b2","demarrage":"D'ici une semaine","activite_society":null,"your_name":null,"email":null,"telephone":null,"name_society":null,"others"
-        */
+
+        Notification::create([
+            'actor_id'=> 1,
+            'for'=> "admin",
+            'title' => "Le titrz",
+            'content' => "Contenu",
+            'link'=> "htpq..",
+        ]);
+        return "ok";
+        $info =[
+            'user'=> 3,
+        ];
+
+        app('App\Http\Controllers\NotificationController')->create_notification($info);
+
 
         $req->validate([
             'espace'=>['required', 'string','min:1'],
@@ -70,49 +82,38 @@ class DevisController extends Controller
             'services.*'=>[ 'string','min:1'],
         ]);
 
-        $dev = new Devi();
-        $dev->espace = $req['espace'];
-        $dev->frequence = $req['frequence'];
-        $dev->surface = $req['surface'];
-        $dev->demarrage = $req['demarrage'];
-        $dev->collabo_society = $req['collabo_society'];
-        $dev->your_name = $req['your_name'];
-        $dev->email = $req['email'];
-        $dev->telephone = $req['telephone'];
-        $dev->name_society = $req['name_society'];
-        $dev->others = $req['others'];
-        $dev->services = json_encode($req['services']);
-        $dev->date_emission = date('Y-m-d');
-        $dev->save();
-
-        $details = [
-            "espace" => $req['espace'],
-            'frequence'=> $req['frequence'],
-            'surface'=> $req['surface'],
-            'demarrage'=> $req['demarrage'],
-            //'activite_society'=> $req['activite_society'],
-            'collabo_society'=> $req['collabo_society'],
-            'your_name'=> $req['your_name'],
-            'email'=> $req['email'],
-            'telephone'=> $req['telephone'],
-            'name_society'=> $req['name_society'],
-            'others'=> $req['others'],
-            'services'=> json_encode($req['services']),
+        $data = [
+            'espace' => $req->espace,
+            'frequence' => $req->frequence,
+            'surface' => $req->surface,
+            'demarrage' => $req->demarrage,
+            'collabo_society' => $req->collabo_society,
+            'your_name' => $req->your_name,
+            'email' => $req->email,
+            'telephone' => $req->telephone,
+            'name_society' => $req->name_society,
+            'others' => $req->others,
+            'services' => json_encode($req['services']),
+            'date_emission' => date('Y-m-d'),
         ];
 
-        $ad = DB::table('administrateurs')->where('receve_mail', 1)
-        ->get(['email']);
+        //Créer le devis
+        Devi::create($data);
 
-        foreach ($ad as $value) {
-            \Mail :: to (  $value->email )
-            ->send ( new \App\Mail\SendDevis( $details ));
+        //Envoyer le mail aux admins
+        $admins = DB::table('administrateurs')->where('receve_mail', 1)->get(['id','email']);
+
+        foreach ($admins as $value) {
+            \Mail ::to( $value->email)->send ( new \App\Mail\SendDevis( $data ));
         }
 
 
 
-        return redirect()->back()->with('msg', "ok");
+        return redirect()->back()->with('msg', "Dévis envoyé avec succès");
 
     }
+
+
 
     function send_job_demande(Request $req){
         //"your_name":null,"sexe":"Masculin","email":null,"telephone":null,"age":"18","adresse":null,"others"#

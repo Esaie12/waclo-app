@@ -66,7 +66,7 @@ Route::get('/faire-un-devis', function () {
     return view('siteweb.devis');
 })->name('devis');
 
-Route::post('make-devis-gratuitement', [DevisController::class, "send_devis"])
+Route::post('make-devis-gratuitement', [App\Http\Controllers\user\DevisController::class, "send_devis"])
 ->name('send_devis');
 
 Route::post('send-message', [DevisController::class, "send_message"])
@@ -99,7 +99,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [UserController::class, 'mesprogrammes'])
         ->name('mesprogrammes');
 
-        Route::get('/confirm/{id}', [UserController::class, 'confirm_programmes'])
+        Route::post('/confirm/{id}', [UserController::class, 'confirm_programmes'])
         ->name('confirm');
 
         Route::get('search', [UserController::class, 'programmes_search'])
