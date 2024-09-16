@@ -72,9 +72,14 @@ class DevisController extends Controller
             'telephone'=>['required', 'string','min:1'],
             'name_society'=>['nullable', 'string','min:1'],
             'others'=>['nullable', 'string','min:1'],
-            'services'=>['required'],
-            'services.*'=>[ 'string','min:1'],
+            'services'=>['required','array'],
+            'services.*'=>[ 'string'],
         ]);
+
+        $tab=[];
+        foreach ($req['services'] as $key => $value) {
+           $tab[]=$value;
+        }
 
         $data = [
             'espace' => $req->espace,
@@ -87,7 +92,7 @@ class DevisController extends Controller
             'telephone' => $req->telephone,
             'name_society' => $req->name_society,
             'others' => $req->others,
-            'services' => json_encode($req['services']),
+            'services' => $tab,
             'date_emission' => date('Y-m-d'),
         ];
 

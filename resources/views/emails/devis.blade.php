@@ -92,7 +92,7 @@
                 <td>
 
                     @php
-                    $tab= json_decode( $details['services'], true );
+                    $tab= $details['services'];
                     @endphp
 
                     <ul>

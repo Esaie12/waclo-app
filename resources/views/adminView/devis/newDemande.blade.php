@@ -35,7 +35,7 @@
                         <tbody>
                             @foreach ($devis as $key=> $item)
                             <tr>
-                                <th scope="row">{{$key+1}}</th>
+                                <th scope="row">DEVI{{$item->id}}</th>
                                 <td>{{$item->your_name}}</td>
                                 <td>{{$item->email}}</td>
                                 <td>{{$item->telephone}}</td>

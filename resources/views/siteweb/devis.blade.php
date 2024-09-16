@@ -47,7 +47,7 @@
                         <h3>Demander un devis</h3>
                         @if(Session::get('msg'))
                         <div class="alert alert-success" role="alert">
-                            <strong>Votre demande a été envoyée avec succès. Nous vous contactez d'ici peu pour vous envoyer la facture. Merci.</strong>
+                            <strong>Votre demande a été envoyée avec succès. Un devis vous sera envoyé par mail sous 24h au plus.</strong>
                         </div>
                         @else
                         <p class="d-lg-block d-none" >
