@@ -20,6 +20,7 @@ class DevisController extends Controller
     function les_nouvelles_demandes(){
 
         $data = DB::table('devis')->where('traiter',0)
+        ->orderByDesc('id')
         ->get();
 
         return view('adminView.devis.newDemande',['devis'=>$data]);
@@ -30,6 +31,7 @@ class DevisController extends Controller
         $data = DB::table('devis')
         ->join('administrateurs', 'devis.traiter_by','administrateurs.id')
         ->where('traiter',1)
+        ->orderByDesc('devis.id')
         ->get(['devis.*', 'administrateurs.name', 'administrateurs.firstname']);
 
         return view('adminView.devis.oldDemande',['devis'=>$data]);

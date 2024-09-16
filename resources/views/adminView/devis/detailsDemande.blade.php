@@ -110,11 +110,13 @@
                             <div class="col-lg-6 col-md-6 label text-primary">Les services voulus sont:</div>
                             <div class="col-lg-6 col-md-6">
                                 <ul>
+
                                     <?php
                                     $tab = json_decode( $devis->services, true );
                                     foreach ($tab as $key => $value): ?>
                                     <li>{{ $value }}</li>
                                     <?php endforeach ?>
+
                                 </ul>
                             </div>
                         </div>
