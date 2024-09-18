@@ -42,7 +42,7 @@ class DashController extends Controller
             'admin'=>$d4,
             'client'=>$d5
         ];
-        return view('appweb.dashboard',['nbre'=>$nbre]);
+        return view('adminView.dashboard',['nbre'=>$nbre]);
     }
 
     function mes_clients(){
