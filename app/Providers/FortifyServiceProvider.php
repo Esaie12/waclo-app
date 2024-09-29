@@ -87,7 +87,6 @@ class FortifyServiceProvider extends ServiceProvider
                 if($request->is('agent/*')){
 
 
-
                     $user = Employe::where('email', $request->email)
                     ->orWhere('telephone',$request->email)->first();
 
@@ -95,7 +94,6 @@ class FortifyServiceProvider extends ServiceProvider
 
                             return $user;
                     }
-
 
 
                 }else{

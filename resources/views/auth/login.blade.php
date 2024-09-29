@@ -22,7 +22,7 @@
 
     <link href="{{asset('assets_app/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets_app/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
-    <link href="assets_app/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="{{asset('assets_app/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets_app/vendor/quill/quill.snow.css')}}" rel="stylesheet">
     <link href="{{asset('assets_app/vendor/quill/quill.bubble.css')}}" rel="stylesheet">
     <link href="{{asset('assets_app/vendor/remixicon/remixicon.css')}}" rel="stylesheet">
@@ -58,9 +58,19 @@
                                 <div class="card-body">
 
                                     <div class="pt-4 pb-2">
-                                        <h5 class="card-title text-center pb-0 fs-4">Vous etes un de nos clients</h5>
+                                        <h5 class="card-title text-center pb-0 fs-4">Vous êtes un de nos clients</h5>
                                         <p class="text-center small">Entrez votre email et votre mot de passe</p>
                                     </div>
+
+                                    @php
+                                        if (request()->routeIs('admin.login')) {
+                                            $routePasse = route('admin.forgot');
+                                        } elseif (request()->routeIs('agent.login')) {
+                                            $routePasse = route('agent.forgot');
+                                        }elseif (request()->routeIs('login')) {
+                                            $routePasse = route('password.request');
+                                        }
+                                    @endphp
 
                                     <form class="row g-3 needs-validation" method="POST" action="{{route('login')}}" >
                                         @csrf
@@ -92,16 +102,16 @@
                                         <div class="col-12">
                                             <button class="btn btn-primary w-100" type="submit">Connectez-vous</button>
                                         </div>
-                                        <!--div class="col-12">
+                                        <div class="col-12">
                                             <p class="small mb-0">
                                                 <a
-                                                    href="">Mot de passe oublié
+                                                    href="{{ $routePasse }}">Mot de passe oublié
                                                 </a>
                                             </p>
-                                            <div class="text-center">
+                                            {{-- <div class="text-center">
                                                 <a href="{{route('register')}}">Inscrivez vous</a>
-                                            </div>
-                                        </div-->
+                                            </div> --}}
+                                        </div>
                                     </form>
 
                                 </div>

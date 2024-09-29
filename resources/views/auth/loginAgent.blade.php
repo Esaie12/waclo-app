@@ -65,6 +65,16 @@
                                         <p class="text-center small">Entrez votre email ou numéro de téléphone et votre mot de passe</p>
                                     </div>
 
+                                    @php
+                                        if (request()->routeIs('admin.login')) {
+                                            $routePasse = route('admin.forgot');
+                                        } elseif (request()->routeIs('agent.login')) {
+                                            $routePasse = route('agent.forgot');
+                                        }elseif (request()->routeIs('login')) {
+                                            $routePasse = route('password.request');
+                                        }
+                                    @endphp
+
                                     <form class="row g-3 needs-validation" method="POST" action="{{route('agent.login')}}" >
                                         @csrf
                                         <div class="col-12 mb-2">
@@ -99,6 +109,16 @@
 
                                         <div class="col-12">
                                             <button class="btn btn-primary w-100" type="submit">Connectez-vous</button>
+                                        </div>
+                                        <div class="col-12">
+                                            <p class="small mb-0">
+                                                <a
+                                                    href="{{ $routePasse }}">Mot de passe oublié
+                                                </a>
+                                            </p>
+                                            {{-- <div class="text-center">
+                                                <a href="{{route('register')}}">Inscrivez vous</a>
+                                            </div> --}}
                                         </div>
                                     </form>
 

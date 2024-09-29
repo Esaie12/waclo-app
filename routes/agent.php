@@ -1,14 +1,15 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Providers\FortifyServiceProvider;
-use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use App\Http\Controllers\agent\BordController;
 
-use App\Http\Controllers\admin\SocieteController as SocieteController;
 use App\Http\Controllers\admin\DirectionController;
 use App\Http\Controllers\admin\PersonnelController;
+use App\Http\Controllers\user\UserSettingController;
 
-use App\Http\Controllers\agent\BordController;
 use App\Http\Controllers\agent\AgentSettingController;
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use App\Http\Controllers\admin\SocieteController as SocieteController;
 
 Route::get('/2', function(){
     return view('appweb.dashboard');
@@ -19,6 +20,14 @@ Route::prefix('agent')->name('agent.')->group(function () {
     Route::get('home', [BordController::class, 'page_home'] )
     ->middleware('auth:agent')
     ->name('home');
+
+    Route::get('/forgot', function () {
+        return view('auth.forgot-password');
+    })->name('forgot')->middleware(['guest:agent']);
+
+    Route::post('forgot-password', [AgentSettingController::class, 'verify_reset_email'])->name('forgot-password')->middleware(['guest:agent']);
+    Route::get('reset-password/{token}/{email}', [AgentSettingController::class, 'reset_password'])->name('reset-password')->middleware(['guest:agent']);
+    Route::post('change-password', [AgentSettingController::class, 'change_password'])->name('change-password')->middleware(['guest:agent']);
 
     Route::middleware(['auth:agent'])->group(function () {
 
@@ -50,8 +59,6 @@ Route::prefix('agent')->name('agent.')->group(function () {
 
     });
 
-
-
     Route::get('login',function(){ return view('auth.loginAgent'); })
     ->middleware(['guest:agent'])
     ->name('login');
@@ -72,3 +79,4 @@ Route::prefix('agent')->name('agent.')->group(function () {
         ->name('logout');
 
 });
+
