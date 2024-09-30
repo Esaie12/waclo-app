@@ -53,7 +53,7 @@
                 <div class="row mb-3">
                     <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                     <div class="col-12">
-                        <input readonly type="email" name="email" class="form-control" value="{{ $email }}" id="email">
+                        <input type="email" readonly class="form-control" name="email" value="{{ $request->email }}" id="email">
                         @error('email')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
