@@ -28,6 +28,7 @@ class SendDevis extends Mailable
      * @return $this
      */
     public function build()
+
     {
         return $this->from($this->details['email'])
         ->subject("Nouvelle demande de devis")

@@ -13,6 +13,7 @@ use App\Http\Controllers\admin\EmployeController;
 use App\Http\Controllers\admin\DashController;
 use App\Http\Controllers\admin\TravauxController;
 use App\Http\Controllers\admin\AdminSettingController as ASController;
+use App\Http\Controllers\user\UserSettingController;
 
 Route::get('/2', function(){
     return view('appweb.dashboard');
@@ -211,12 +212,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
 
-
-
     Route::get('login',function(){ return view('auth.loginAdmin'); })
     ->middleware(['guest:admin'])
     ->name('login');
 
+    Route::get('/forgot', function () {
+        return view('auth.forgot-password');
+    })->name('forgot')->middleware(['guest:admin']);
+
+    Route::post('forgot-password', [UserSettingController::class, 'verify_reset_email'])->name('forgot-password')->middleware(['guest:admin']);
+    Route::get('reset-password/{token}/{email}', [UserSettingController::class, 'reset_password'])->name('reset-password')->middleware(['guest:admin']);
+    Route::post('change-password', [UserSettingController::class, 'change_password'])->name('change-password')->middleware(['guest:admin']);
 
     $limiter = config('fortify.limiters.login');
     $twoFactorLimiter = config('fortify.limiters.two-factor');
