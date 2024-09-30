@@ -1,9 +1,10 @@
-@extends('app_layout.template')
 
+<x-admin-layout>
+    <x-slot name="titre">Devis Details</x-slot>
 
-@section('titre','Devis Details')
+    <x-slot name="devi_menu"> show</x-slot>
+    <x-slot name="devi_new">active</x-slot>
 
-@section('contenu')
 <div class="pagetitle">
     <h1>Voir en détails une demande de devis</h1>
     <nav>
@@ -129,4 +130,6 @@
     </div>
 </section>
 
-@endsection
+</x-admin-layout>
+
+
