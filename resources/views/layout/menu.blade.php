@@ -24,16 +24,23 @@
                 <li class="{{ request()->routeIs('devis') ? 'active' : '' }} d-lg-none d-block"><a
                         href="{{route('devis')}}">Demande de devis</a>
                 </li>
-                <li class="menu-item-has-children">
+                <li class="menu-item-has-children children2">
                     <a href="{{route('service')}}">Nos services</a>
                     <ul class="submenu">
-                        <li><a href="{{route('services.bureau')}}">Nettoyage de bureau</a></li>
-                        <li><a href="{{route('services.commerce')}}">Nettoyage de commerce - Surface commercial</a></li>
-                        <li><a href="{{route('services.maison')}}">Nettoyage de copropriété - Maison - Appartement</a></li>
-                        <li><a href="{{route('services.ponctuel')}}">Nettoyage ponctuel et remise en état</a></li>
+                        <li><a href="{{route('services.bureau')}}">Nettoyage de Bureau</a></li>
+                        <li><a href="{{route('services.commerce')}}">Nettoyage de Commerce - Surface Commercial</a></li>
+                        <li><a href="{{route('services.maison')}}">Nettoyage de Copropriété - Maison - Appartement</a></li>
+                        <li><a href="{{route('services.ponctuel')}}">Nettoyage Ponctuel et Remise en état</a></li>
                         <li><a href="{{route('services.restaurant')}}">Nettoyage de Restaurant - Hotel</a></li>
                     </ul>
                 </li>
+                <style>
+                    .children2 ul.submenu li a {
+                        text-transform: none !important;
+                    }
+
+
+                </style>
                 <li class="{{ request()->routeIs('contact') ? 'active' : '' }}"><a href="{{route('contact')}}">Nos
                         contacts</a>
                 </li>

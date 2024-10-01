@@ -39,7 +39,7 @@ class DevisController extends Controller
         $admins = DB::table('administrateurs')->where('receve_mail', 1)->get(['id','email']);
 
         foreach ($admins as $value) {
-            \Mail::to( $value->email )->send( new \App\Mail\SendMsg( $details ));
+            Mail::to( $value->email )->send( new \App\Mail\SendMsg( $details ));
 
             $info =[
                 'actor_id'=> $value->id,
@@ -99,11 +99,17 @@ class DevisController extends Controller
         //Créer le devis
         $dev = Devi::create($data);
 
+        $info = [
+            'user_name' => $req->your_name,
+        ];
+
+        Mail::to($req->email)->send(new \App\Mail\UserDevis($info));
+
         //Envoyer le mail aux admins
         $admins = DB::table('administrateurs')->where('receve_mail', 1)->get(['id','email']);
 
         foreach ($admins as $value) {
-            \Mail ::to( $value->email)->send ( new \App\Mail\SendDevis( $data ));
+            Mail ::to( $value->email)->send ( new \App\Mail\SendDevis( $data ));
 
             $info =[
                 'actor_id'=> $value->id,
@@ -148,7 +154,7 @@ class DevisController extends Controller
 
 
         foreach ($admins as $value) {
-            \Mail:: to( $value->email)->send( new \App\Mail\SendJob( $details ));
+            Mail:: to( $value->email)->send( new \App\Mail\SendJob( $details ));
 
             $info =[
                 'actor_id'=> $value->id,

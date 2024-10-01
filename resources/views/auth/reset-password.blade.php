@@ -45,6 +45,12 @@
     <main>
     <div class="container">
         <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+            <div class="d-flex justify-content-center py-4">
+                <a href="{{route('index')}}" class="logo d-flex align-items-center w-auto">
+                    <img  src="{{asset('assets/img/logo-c.png')}}" alt="">
+                    <span class="d-none d-lg-block">WACLO</span>
+                </a>
+            </div>
             <h2>Mot de passe oublié ?</h2>
 
             <form action="{{ route('password.update') }}" method="POST">
@@ -86,7 +92,7 @@
             </form>
 
             <div class="credits mt-3">
-                Designed by <a href="https://bootstrapmade.com/">AKM TECH</a>
+                Designed by <a href="tel:+22961102637">AKM TECH</a>
             </div>
         </section>
 

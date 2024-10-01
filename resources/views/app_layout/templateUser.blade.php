@@ -80,7 +80,7 @@
         <div class="copyright">
             &copy; Copyright <strong><span>WACLO</span></strong>. Tous droits recervés à l'auteur
         </div>
-        <div class="credits"> Faire Par <a href="tel:+22967047668">AKM TECH</a>
+        <div class="credits"> Faire Par <a href="tel:+22961102637">AKM TECH</a>
         </div>
     </footer><!-- End Footer -->
 
