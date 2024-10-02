@@ -79,15 +79,23 @@
                                     @php
                                     $tab2 = array( "Quotidiennement","5 fois par semaine" ,"4 fois par semaine" ,"3 fois par semaine" ,"2 fois par semaine",
                                         "1 fois par semaine","2 fois par mois",
-                                        "1 fois par mois", "Ponctuelle ou Récurente", "Autres"
-                                );
+                                        "1 fois par mois", "Ponctuelle ou Récurente",
+                                    );
                                     @endphp
-                                    <select name="frequence" id="" class="form-control" >
+                                    <select name="frequence" id="frequenceId" class="form-control" onchange="frequenceSelect()" >
                                         @foreach ($tab2 as $item)
                                             <option value="{{$item}}" @if(old('frequence') == $item) selected @endif >{{$item}}</option>
                                         @endforeach
+                                        <option value="other">Autres</option>
                                     </select>
                                     @error('frequence')
+                                        <strong class="text-danger">{{$message}}</strong>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4 form-group" style="display:  {{ old('frequence') == 'other' ? '' : 'none' }}" id="otherFrequence" >
+                                    <label for=""><strong class="text-danger" >Donnez votre fréquence<sup class="text-danger">*</sup> </strong> </label>
+                                    <input type="text" name="other_frequence" value="{{old('other_frequence')}}" class="form-control" >
+                                    @error('other_frequence')
                                         <strong class="text-danger">{{$message}}</strong>
                                     @enderror
                                 </div>
@@ -233,9 +241,17 @@
                                         <div class="ml-2" >Rangement / Organisation de l'espace</div>
                                     </div>
                                     <div class="d-flex justify-content-arround">
-                                        <input type="checkbox" name="services[]" value="Autres besoins" id="">
+                                        <input type="checkbox"  value="Autres besoins" id="" onclick="checkOther()" >
                                         <div class="ml-2" >Autres besoins</div>
                                     </div>
+
+                                </div>
+                                <div class="col-md-12" id="checkOtherId" style="display:none" >
+                                    <label for=""><strong class="text-danger" >Renseigner vos autres besoins <sup class="text-danger"></sup> </strong> </label>
+                                        <input type="text" name="services[]" class="form-control" >
+                                        @error('other_frequence')
+                                            <strong class="text-danger">{{$message}}</strong>
+                                        @enderror
                                 </div>
                             </div>
 
@@ -257,4 +273,27 @@
     </div>
 </div>
 
+@endsection
+
+
+@section('codeJs')
+<script>
+
+    function frequenceSelect() {
+       var frequence = document.getElementById("frequenceId").value;
+        $(function(){
+            if(frequence === 'other') {
+                $('#otherFrequence').show();
+            }else{
+                $('#otherFrequence').hide();
+            }
+        });
+    }
+
+    function checkOther(){
+        $(function(){
+            $('#checkOtherId').toggle();
+        });
+    }
+</script>
 @endsection

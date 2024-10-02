@@ -81,6 +81,10 @@ class DevisController extends Controller
            $tab[]=$value;
         }
 
+        if($req->frequence == "other"){
+            $req->frequence = $req->other_frequence ?? 'Autre Frequence';
+        }
+
         $data = [
             'espace' => $req->espace,
             'frequence' => $req->frequence,

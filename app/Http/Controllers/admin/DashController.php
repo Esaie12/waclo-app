@@ -108,8 +108,7 @@ class DashController extends Controller
             'titre'=> "Vous avez un compte Client chez Waclo",
         ];
 
-        \Mail :: to ( $n->email )
-        ->send ( new \App\Mail\NotifCompte( $details ));
+        \Mail :: to ( $n->email )->send ( new \App\Mail\NotifCompte( $details ));
 
         return redirect()->route('admin.clients.mesclients');
 
