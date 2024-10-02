@@ -90,7 +90,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="copy-one">
-                <p>© copyright {{date('Y')}} by <a href="tel:+22967047668">AKM TECH</a>
+                <p>© copyright {{date('Y')}} by <a href="tel:+22961102637">AKM TECH</a>
                 </p>
             </div>
         </div>

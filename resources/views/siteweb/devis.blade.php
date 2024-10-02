@@ -77,9 +77,9 @@
                                 <div class="col-md-4 form-group">
                                     <label for=""><strong>A quelle fréquence faut-il intervenir ? <sup class="text-danger">*</sup> </strong> </label>
                                     @php
-                                    $tab2 = array( "Quotidiennement","3 Fois par semaine" ,"2 fois par semaine",
-                                        "1 Fois par semaine","2 Fois par mois",
-                                        "1 Fois par mois", "Ponctuelle ou Récurente", "Autres"
+                                    $tab2 = array( "Quotidiennement","5 fois par semaine" ,"4 fois par semaine" ,"3 fois par semaine" ,"2 fois par semaine",
+                                        "1 fois par semaine","2 fois par mois",
+                                        "1 fois par mois", "Ponctuelle ou Récurente", "Autres"
                                 );
                                     @endphp
                                     <select name="frequence" id="" class="form-control" >
