@@ -26,7 +26,7 @@ class CreateAdministrateursTable extends Migration
             $table->string('password');
             $table->string('telephone');
             $table->string('adresse')->nullable();
-
+            $table->string('photo')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->dateTime('deleted_at')->nullable();
