@@ -42,7 +42,7 @@
         <div class="row">
             <div class="col-md-6 pt-80 pb-80">
                 <div class="ser-det-img">
-                    <img src="{{asset('assets/img/local01.jpeg')}}" alt="" />
+                    <img src="{{asset('assets/ia/fille.jpg')}}" alt="" />
                 </div>
             </div>
 
