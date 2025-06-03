@@ -12,9 +12,18 @@
 
 <div class="minsection">
 
+    <style>
+        .swiper-slide.cover-background {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 80vh;
+        }
+
+    </style>
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
-            <div data-swiper-autoplay="2000" class="swiper-slide cover-background" style="background-image:url({{asset('assets/img/local1.webp')}})">
+            <div data-swiper-autoplay="2000" class="swiper-slide cover-background" style="background-image:url({{asset('assets/ia/sourrier.jpg')}})">
                 <div class="content-slider">
                     <h1 style="text-transform: uppercase" >
                         <!-- Plus qu'une entreprise de nettoyage -->
@@ -27,7 +36,7 @@
                         </a>
                 </div>
             </div>
-            <div data-swiper-autoplay="2000"data-swiper-autoplay="2000" class="swiper-slide cover-background" style="background-image:url(https://www.deco.fr/sites/default/files/styles/slider_1000x500/public/2019-12/shutterstock_1058884367.jpg?itok=Ae8iLHyF) ; ">
+            <div data-swiper-autoplay="2000"data-swiper-autoplay="2000" class="swiper-slide cover-background" style="background-image:url('assets/ia/salle.jpg') ; ">
                 <div class="content-slider">
                     <h1 style="text-transform: uppercase"  >
                        <!-- Nous intervenons partout pour vos <br>
@@ -58,7 +67,7 @@
                 </div>
             </div>
 
-            <div data-swiper-autoplay="2000" class="swiper-slide cover-background" style="background-image:url({{asset('assets/images/banner1.png')}})">
+            <div data-swiper-autoplay="2000" class="swiper-slide cover-background" style="background-image:url({{asset('assets/ia/vitre.jpg')}})">
                 <div class="content-slider animated fadeInLeft animate__delay-2s">
                     <h1 style="text-transform: uppercase">
                         Concluez des Contrats <br> de nettoyage <br>
@@ -90,23 +99,25 @@
                         </div>
                     </div>
                 </div-->
-                <div class="col-md-6 pt-50 pl-60 pr-30 mt-5">
+                <div class="col-md-6 pt-50 pl-60 pr-30 mt-lg-5 mt-0">
                     <div class="left-image"><!-- local0.png -->
-                        <img src=" {{asset('assets/img/menage-bureau-entreprises.jpg')}}" alt="">
+                        <img height="" src=" {{asset('assets/ia/boy2.jpg')}}" alt="">
                     </div>
                 </div>
                 <div class="col-md-6 pt-50 pl-60 pr-30">
-                    <div class="right-text">
+                    <div class="right-text mt-5">
                         <h4 class="upcase linetext pl-70">A propos de wàcló</h4>
                         <h3 style="text-transform: uppercase " >
                             wàcló , une entreprise humaine à votre service
                         </h3>
                         <p>
                             wàcló est une entreprise spécialisée dans les services de nettoyage
-                            et d'entretien pour les particuliers et les entreprises. Nous sommes passionnés par la propreté et
-                            la satisfaction de nos clients est notre priorité absolue. Avec une équipe expérimentée et des
+                            et d'entretien pour les particuliers et les entreprises. <br> <br> Nous sommes passionnés par la propreté et
+                            la satisfaction de nos clients est notre priorité absolue.  <br>Avec une équipe expérimentée et des
                              techniques de nettoyage de pointe, nous sommes déterminés à fournir des
-                            services de haute qualité pour répondre à tous vos besoins en matière de nettoyage.
+                            services de haute qualité pour répondre à tous vos besoins en matière de nettoyage. <br>
+                            <br>
+                            Notre offre de nettoyage de bureaux est centrée sur les besoins en constante évolution des PME et Grandes entreprises locales pour le nettoyage de leurs locaux professionnels. Spécialiste du nettoyage en entreprise, notre gamme de prestation s'adresse aux bureaux, surfaces commerciales, hôtellerie et restauration, copropriétés.
                         </p>
                         <div class="company-aim">
                             <!--div class="com-one">
@@ -287,7 +298,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="img-con before-ani">
-                        <img src="{{asset('assets/img/lust.jpg')}}" alt="" />
+                        <img src="{{asset('assets/ia/waclo1.jpg')}}" alt="" />
                         <div class="po-con alltuchtopdown">
                             <h3>Nous fournissons les meilleurs services de nettoyage</h3>
                         </div>

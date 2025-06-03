@@ -333,7 +333,7 @@
             </div>
             <div class="col-md-4  offset-md-1">
                 <div class="img-faq before-ani">
-                    <img src="{{asset('assets/images/faq.png')}}" alt="" />
+                    <img src="{{asset('assets/ia/boy2.jpg')}}" alt="" />
                 </div>
             </div>
         </div>

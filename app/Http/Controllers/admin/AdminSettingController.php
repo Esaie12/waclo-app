@@ -56,7 +56,7 @@ class AdminSettingController extends Controller
         "adresse":null,"telephone":null,"email_one":null,"email_deux":null,"facebook":null,"twitter":null,"whatsapp":null,"tiktok":null,"google_maps":
         */
         $req->validate([
-            'adresse'=>['required', 'string', 'max:30'],
+            'adresse'=>['required', 'string', 'max:255'],
             'telephone'=>['required', 'string', 'max:15'],
             'email_one'=>['required', 'email'],
             'email_deux'=>['nullable', 'email'],
