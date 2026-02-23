@@ -1,0 +1,183 @@
+# API Mobile - Waclo (JWT)
+
+Base URL: `https://votre-domaine.com/api/v1`
+
+## Authentification JWT
+Les routes protégées utilisent un token JWT Bearer.
+
+Header HTTP obligatoire:
+
+`Authorization: Bearer {jwt_token}`
+
+- Le token est retourné après login (`/client/login`, `/agent/login`, `/admin/login`).
+- `logout` invalide le token courant (blacklist par `jti` jusqu'à expiration).
+
+---
+
+## 1) APIs publiques
+
+### POST `/devis`
+Créer une demande de devis.
+
+**Body (JSON):**
+- `espace` *(string, requis)*
+- `frequence` *(string, requis)*
+- `surface` *(string, requis)*
+- `activite_society` *(string, optionnel)*
+- `demarrage` *(string, optionnel)*
+- `collabo_society` *(string, optionnel)*
+- `your_name` *(string, requis)*
+- `email` *(email, requis)*
+- `telephone` *(string, requis)*
+- `name_society` *(string, optionnel)*
+- `others` *(string, optionnel)*
+- `services` *(array[string], optionnel)*
+
+**Réponse succès (201):**
+- `message`
+- `data` (objet devis créé)
+
+---
+
+## 2) APIs Client Mobile
+
+### POST `/client/login`
+Connexion client.
+
+**Body (JSON):**
+- `email` *(email, requis)*
+- `password` *(string, requis)*
+
+**Réponse succès (200):**
+- `message`
+- `token.token` *(JWT à stocker côté mobile)*
+- `token.token_type` = `Bearer`
+- `token.expires_in_minutes`
+- `user` (infos du client)
+
+### POST `/client/logout` (protégée JWT)
+Déconnexion client (invalide le JWT courant).
+
+### GET `/client/me` (protégée JWT)
+Récupère le profil du client connecté.
+
+### GET `/client/contrats` (protégée JWT)
+Liste les contrats du client connecté.
+
+### GET `/client/programmes` (protégée JWT)
+Liste les programmes du client connecté.
+
+**Query params (optionnels):**
+- `contrat_id` *(integer)*: filtrer les programmes par contrat.
+
+---
+
+## 3) APIs Agent Mobile
+
+### POST `/agent/login`
+Connexion agent.
+
+**Body (JSON):**
+- `email` *(email, requis)*
+- `password` *(string, requis)*
+
+**Réponse succès (200):**
+- `message`
+- `token.token` *(JWT à stocker côté mobile)*
+- `token.token_type` = `Bearer`
+- `token.expires_in_minutes`
+- `agent` (infos de l'agent)
+
+### POST `/agent/logout` (protégée JWT)
+Déconnexion agent (invalide le JWT courant).
+
+### GET `/agent/me` (protégée JWT)
+Récupère le profil de l'agent connecté.
+
+### GET `/agent/agenda` (protégée JWT)
+Récupère l'agenda de l'agent (programmes affectés).
+
+**Query params (optionnels):**
+- `date` *(format YYYY-MM-DD)*: filtrer l'agenda par date.
+
+---
+
+## 4) APIs Admin Mobile (NOUVEAU)
+
+### POST `/admin/login`
+Connexion administrateur.
+
+**Body (JSON):**
+- `email` *(email, requis)*
+- `password` *(string, requis)*
+
+**Réponse succès (200):**
+- `message`
+- `token.token` *(JWT à stocker côté mobile)*
+- `token.token_type` = `Bearer`
+- `token.expires_in_minutes`
+- `admin` (infos de l'admin)
+
+### POST `/admin/logout` (protégée JWT)
+Déconnexion admin (invalide le JWT courant).
+
+### GET `/admin/me` (protégée JWT)
+Profil admin connecté.
+
+### GET `/admin/dashboard` (protégée JWT)
+Statistiques globales:
+- `clients_total`
+- `agents_total`
+- `contrats_total`
+- `programmes_total`
+- `devis_new_total`
+- `jobs_new_total`
+
+### GET `/admin/devis` (protégée JWT)
+Liste des demandes de devis.
+
+**Query params (optionnels):**
+- `status` *(new|old, défaut: new)*
+- `limit` *(integer 1..100, défaut: 20)*
+
+### GET `/admin/jobs` (protégée JWT)
+Liste des candidatures (travails).
+
+**Query params (optionnels):**
+- `status` *(new|old, défaut: new)*
+- `limit` *(integer 1..100, défaut: 20)*
+
+### GET `/admin/clients` (protégée JWT)
+Liste/recherche clients.
+
+**Query params (optionnels):**
+- `q` *(string)*: recherche sur nom, prénom, email, téléphone
+- `limit` *(integer 1..100, défaut: 20)*
+
+---
+
+## Codes d'erreur standards
+- `401` : non authentifié (JWT absent/invalide/expiré)
+- `403` : JWT valide mais guard non autorisé
+- `422` : erreur de validation des paramètres
+
+---
+
+## Liste complète des endpoints
+- `POST /api/v1/devis`
+- `POST /api/v1/client/login`
+- `POST /api/v1/client/logout`
+- `GET /api/v1/client/me`
+- `GET /api/v1/client/contrats`
+- `GET /api/v1/client/programmes`
+- `POST /api/v1/agent/login`
+- `POST /api/v1/agent/logout`
+- `GET /api/v1/agent/me`
+- `GET /api/v1/agent/agenda`
+- `POST /api/v1/admin/login`
+- `POST /api/v1/admin/logout`
+- `GET /api/v1/admin/me`
+- `GET /api/v1/admin/dashboard`
+- `GET /api/v1/admin/devis`
+- `GET /api/v1/admin/jobs`
+- `GET /api/v1/admin/clients`
